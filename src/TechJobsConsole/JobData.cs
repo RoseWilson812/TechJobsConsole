@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
+//using System.Reflection;
 using System.Text;
 
 namespace TechJobsConsole
@@ -44,20 +44,51 @@ namespace TechJobsConsole
             LoadData();
 
             List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
+            string valueLowerCase = value.ToLower();
 
             foreach (Dictionary<string, string> row in AllJobs)
             {
-                string aValue = row[column];
+                string aValue = row[column]; //column = "location" or "employer" aValue = "Portland" or the value in the file
+                string aValueLowerCase = aValue.ToLower();
+                
 
-                if (aValue.Contains(value))
+                if (aValueLowerCase.Contains(valueLowerCase))
                 {
                     jobs.Add(row);
                 }
             }
-
+            
             return jobs;
         }
 
+        public static List<Dictionary<string, string>> FindByValue(List<string> allColumns, string value)
+        {
+            // load data, if not already loaded
+            LoadData();
+
+            List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
+            string column = "";
+            string valueLowerCase = value.ToLower();
+
+            foreach (Dictionary<string, string> row in AllJobs)
+            {
+                for (int i = 0; i < allColumns.Count -1; i++)
+                {
+                    column = allColumns[i];
+                    string aValue = row[column];
+                    string aValueLowerCase = aValue.ToLower();
+
+
+                    if (aValueLowerCase.Contains(valueLowerCase))
+                    {
+                        jobs.Add(row);
+                        break;
+                    }
+                } 
+            }
+
+            return jobs;
+        }
         /*
          * Load and parse data from job_data.csv
          */
