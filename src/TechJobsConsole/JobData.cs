@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 //using System.Reflection;
 using System.Text;
 
@@ -13,7 +14,15 @@ namespace TechJobsConsole
         public static List<Dictionary<string, string>> FindAll()
         {
             LoadData();
-            return AllJobs;
+
+            List<Dictionary<string, string>> AllJobsCopy = new List<Dictionary<string, string>>();
+
+            foreach (var dict in AllJobs)
+            {
+                AllJobsCopy.Add(new Dictionary<string, string>(dict));
+            }
+
+            return AllJobsCopy;
         }
 
         /*
@@ -29,12 +38,13 @@ namespace TechJobsConsole
             foreach (Dictionary<string, string> job in AllJobs)
             {
                 string aValue = job[column];
-
+                
                 if (!values.Contains(aValue))
                 {
                     values.Add(aValue);
                 }
             }
+            values.Sort();
             return values;
         }
 
@@ -72,13 +82,12 @@ namespace TechJobsConsole
 
             foreach (Dictionary<string, string> row in AllJobs)
             {
-                for (int i = 0; i < allColumns.Count -1; i++)
+                for (int i = 0; i < allColumns.Count; i++)
                 {
                     column = allColumns[i];
                     string aValue = row[column];
                     string aValueLowerCase = aValue.ToLower();
-
-
+                    
                     if (aValueLowerCase.Contains(valueLowerCase))
                     {
                         jobs.Add(row);

@@ -14,7 +14,7 @@ namespace TechJobsConsole
             actionChoices.Add("search", "Search");
             actionChoices.Add("list", "List");
 
-            // Column options
+            // Column options 
             Dictionary<string, string> columnChoices = new Dictionary<string, string>();
             columnChoices.Add("core competency", "Skill");
             columnChoices.Add("employer", "Employer");
@@ -66,7 +66,14 @@ namespace TechJobsConsole
                         List<string> allColumns = new List<string>();
                         foreach (string column in columnChoices.Keys)
                         {
-                            allColumns.Add(column);
+                            if (column == "all")
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                allColumns.Add(column);
+                            }
                             
                         }
 
